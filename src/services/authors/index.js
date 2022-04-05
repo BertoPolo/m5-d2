@@ -26,6 +26,7 @@ authorsRouter.post("/", (req, res) => {
 
   res.status(201).send({ id: newAuthor.id })
 })
+////////////
 
 authorsRouter.get("/", (req, res) => {
   const fileContent = fs.readFileSync(authorsJSONPath)
@@ -34,6 +35,7 @@ authorsRouter.get("/", (req, res) => {
 
   res.status(200).send({ authorsArray })
 })
+////////////
 
 authorsRouter.get("/:authorId", (req, res) => {
   const authorId = req.params.authorId
@@ -43,6 +45,7 @@ authorsRouter.get("/:authorId", (req, res) => {
   const foundAuthor = authorsArray.find((author) => author.id === authorId)
   res.send(foundAuthor)
 })
+////////////
 
 authorsRouter.put("/:authorsId", (req, res) => {
   const authorsArray = JSON.parse(fs.readFileSync(authorsJSONPath))
@@ -55,8 +58,15 @@ authorsRouter.put("/:authorsId", (req, res) => {
   fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
 
   res.send(updatedAuthor)
+})
 
-  authorsRouter.delete()
+////////////
+authorsRouter.delete("/", (req, res) => {
+  const authorsArray = JSON.parse(fsreadFileSync(authorsJSONPath))
+  const remainingAuthors = authorsArray.filter((author) => author.id !== req.params.authorId)
+  fs.writeFileSync(authorsJSONPath, JSON.stringify(remainingAuthors))
+
+  res.status(204).send()
 })
 
 export default authorsRouter
