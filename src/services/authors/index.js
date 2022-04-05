@@ -55,6 +55,8 @@ authorsRouter.put("/:authorsId", (req, res) => {
   fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
 
   res.send(updatedAuthor)
+
+  authorsRouter.delete()
 })
 
 export default authorsRouter
