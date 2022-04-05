@@ -56,3 +56,5 @@ authorsRouter.put("/:authorsId", (req, res) => {
 
   res.send(updatedAuthor)
 })
+
+export default authorsRouter
