@@ -8,14 +8,14 @@ const server = express()
 
 const port = 3001
 
-//login middleware
+/* //login middleware
 const loggerMiddleware = (req, res, next) => {
   console.log(`Request method: ${req.method} --- URL ${req.url} --- ${new Date()}`)
   // req.name = "Alberto"
   next()
 }
 
-server.use(loggerMiddleware) // login
+server.use(loggerMiddleware) // login */
 server.use(express.json())
 
 //endpoints
