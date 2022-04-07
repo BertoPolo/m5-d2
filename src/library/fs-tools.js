@@ -12,5 +12,9 @@ export const readBlogs = () => JSON.parse(readFile(blogsJSONPath))
 
 export const writeBlogs = (content) => writeFile(blogsJSONPath, content)
 
+export const readAuthors = () => JSON.parse(readFile(authorsJSONPath))
+
+export const writeAuthors = (content) => writeFile(authorsJSONPath, content)
+
 // const usersPublicFolderPath = join(process.cwd(), "./public/img/users")
 // export const saveUsersAvatars = (filename, contentAsBuffer) => writeFile(join(usersPublicFolderPath, filename), contentAsBuffer)
