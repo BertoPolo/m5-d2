@@ -1,21 +1,21 @@
 import { checkSchema, validationResult } from "express-validator"
 import createError from "http-errors"
 
-/* const blogsSchema = () => {
+const blogsSchema = {
   category: "ARTICLE CATEGORY",
   title: "ARTICLE TITLE",
   cover: "ARTICLE COVER (IMAGE LINK)",
   readTime: {
     value: 2,
-    unit: "minute"
+    unit: "minute",
   },
   author: {
     name: "AUTHOR AVATAR NAME",
-    avatar: "AUTHOR AVATAR LINK"
+    avatar: "AUTHOR AVATAR LINK",
   },
   content: "HTML",
-  createdAt: "NEW DATE"
-} */
+  createdAt: "NEW DATE",
+}
 
 export const checkBookSchema = checkSchema(blogsSchema)
 
