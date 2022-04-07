@@ -4,7 +4,7 @@ import { readAuthors, writeAuthors } from "../../library/fs-tools.js"
 
 const authorsRouter = express.Router()
 
-authorsRouter.post("/", async (req, res) => {
+authorsRouter.post("/", async (req, res, next) => {
   console.log("REQUEST BODY:", req.body)
   try {
     const authorsArray = await readAuthors()
@@ -16,54 +16,66 @@ authorsRouter.post("/", async (req, res) => {
     writeAuthors(authorsArray)
 
     res.status(201).send({ id: newAuthor.id })
-  } catch (error) {}
+  } catch (error) {
+    next(error)
+  }
 })
 ////////////
-authorsRouter.post("/authors/:id/uploadAvatar", async (req, res) => {
+authorsRouter.get("/", async (req, res, next) => {
   try {
     const authorsArray = await readAuthors()
-  } catch (error) {}
-})
-///////
 
-authorsRouter.get("/", async (req, res) => {
-  const authorsArray = await readAuthors()
-
-  res.status(200).send({ authorsArray })
+    res.status(200).send({ authorsArray })
+  } catch (error) {
+    next(error)
+  }
 })
 ////////////
 
-authorsRouter.get("/:authorId", async (req, res) => {
-  const authorId = req.params.authorId
-  console.log("REQ.PARAMS.authorId: ", req.params.authorId)
-  const authorsArray = await readAuthors()
+authorsRouter.get("/:authorId", async (req, res, next) => {
+  try {
+    const authorId = req.params.authorId
+    console.log("REQ.PARAMS.authorId: ", req.params.authorId)
+    const authorsArray = await readAuthors()
 
-  const foundAuthor = authorsArray.find((author) => author.id === authorId)
-  res.send(foundAuthor)
+    const foundAuthor = authorsArray.find((author) => author.id === authorId)
+    res.send(foundAuthor)
+  } catch (error) {
+    next(error)
+  }
 })
 ////////////
 
-authorsRouter.put("/:authorsId", async (req, res) => {
-  const authorsArray = await readAuthors()
+authorsRouter.put("/:authorsId", async (req, res, next) => {
+  try {
+    const authorsArray = await readAuthors()
 
-  const index = authorsArray.findIndex((author) => author.id === req.params, authorId)
-  const oldAuthor = authorsArray[index]
-  const updatedAuthor = { ...oldAuthor, ...req.body, updatedAt: new Date() }
+    const index = await authorsArray.findIndex((author) => author.id === req.params, authorId)
+    const oldAuthor = authorsArray[index]
+    const updatedAuthor = { ...oldAuthor, ...req.body, updatedAt: new Date() }
 
-  authorsArray[index] = updatedAuthor
-  await writeAuthors(authorsArray)
-  fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
+    authorsArray[index] = updatedAuthor
+    await writeAuthors(authorsArray)
 
-  res.send(updatedAuthor)
+    res.send(updatedAuthor)
+  } catch (error) {
+    next(error)
+  }
 })
 
 ////////////
-authorsRouter.delete("/", async (req, res) => {
-  const authorsArray = JSON.parse(fsreadFileSync(authorsJSONPath))
-  const remainingAuthors = authorsArray.filter((author) => author.id !== req.params.authorId)
-  fs.writeFileSync(authorsJSONPath, JSON.stringify(remainingAuthors))
-  await writeAuthors(remainingAuthors)
-  res.status(204).send()
+authorsRouter.delete("/", async (req, res, next) => {
+  try {
+    const authorsArray = await readAuthors()
+
+    const remainingAuthors = authorsArray.filter((author) => author.id !== req.params.authorId)
+
+    await writeAuthors(remainingAuthors)
+
+    res.status(204).send()
+  } catch (error) {
+    next(error)
+  }
 })
 
 export default authorsRouter

@@ -55,7 +55,7 @@ blogsRouter.put("/blogId", async (req, res, next) => {
   try {
     const blogs = await readBlogs()
 
-    const index = blogs.find((blog) => blog.id === req.params.blogId)
+    const index = await blogs.findIndex((blog) => blog.id === req.params.blogId)
 
     const oldBlog = blogs[index]
 
