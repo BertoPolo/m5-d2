@@ -1,18 +1,9 @@
 import express from "express"
-import fs from "fs"
-import { fileURLToPath } from "url"
-import { dirname, join } from "path"
 import uniqid from "uniqid"
 import createError from "http-errors"
 import { checkBookSchema, checkValidationResult } from "./validation.js"
-
+import { readBlogs, writeBlogs } from "../../library/fs-tools.js"
 const blogsRouter = express.Router()
-
-const authorsJSONPath = join(dirname(fileURLToPath(import.meta.url)), "blogs.json")
-
-const readBlogs = () => JSON.parse(fs.readFile(authorsJSONPath))
-
-const writeBlogs = (content) => fs.writeFile(authorsJSONPath, JSON.stringify(content))
 
 blogsRouter.post("/", checkBookSchema, checkValidationResult, async (req, res, next) => {
   try {

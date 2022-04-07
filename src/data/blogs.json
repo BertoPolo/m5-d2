@@ -10,7 +10,8 @@
     },
     "author": {
       "name": "AUTHOR AVATAR NAME",
-      "avatar": "AUTHOR AVATAR LINK"
+      "avatar": "AUTHOR AVATAR LINK",
+      "comment": []
     },
     "content": "HTML",
     "createdAt": "NEW DATE"
