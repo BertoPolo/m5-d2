@@ -9,10 +9,9 @@ const authorsRouter = express.Router()
 authorsRouter.post("/", async (req, res) => {
   console.log("REQUEST BODY:", req.body)
   try {
+    const authorsArray = await readAuthors()
     const newAuthor = { ...req.body, createdAt: new Date(), id: uniqid() }
     console.log(newAuthor)
-
-    const authorsArray = await readAuthors()
 
     authorsArray.push(newAuthor)
 
@@ -22,6 +21,11 @@ authorsRouter.post("/", async (req, res) => {
   } catch (error) {}
 })
 ////////////
+authorsRouter.post("/authors/:id/uploadAvatar", async (req, res) => {
+  try {
+  } catch (error) {}
+})
+///////
 
 authorsRouter.get("/", async (req, res) => {
   const authorsArray = await readAuthors()
