@@ -1,6 +1,4 @@
 import express from "express"
-import { fileURLToPath } from "url"
-import { dirname, join } from "path"
 import uniqid from "uniqid"
 import { readAuthors, writeAuthors } from "../../library/fs-tools.js"
 
@@ -10,12 +8,12 @@ authorsRouter.post("/", async (req, res) => {
   console.log("REQUEST BODY:", req.body)
   try {
     const authorsArray = await readAuthors()
+
     const newAuthor = { ...req.body, createdAt: new Date(), id: uniqid() }
     console.log(newAuthor)
 
     authorsArray.push(newAuthor)
-
-    fs.writeFileSync(authorsJSONPath, JSON.stringify(authorsArray))
+    writeAuthors(authorsArray)
 
     res.status(201).send({ id: newAuthor.id })
   } catch (error) {}
@@ -23,6 +21,7 @@ authorsRouter.post("/", async (req, res) => {
 ////////////
 authorsRouter.post("/authors/:id/uploadAvatar", async (req, res) => {
   try {
+    const authorsArray = await readAuthors()
   } catch (error) {}
 })
 ///////
