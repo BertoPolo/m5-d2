@@ -2,19 +2,61 @@ import { checkSchema, validationResult } from "express-validator"
 import createError from "http-errors"
 
 const blogsSchema = {
-  category: "ARTICLE CATEGORY",
-  title: "ARTICLE TITLE",
-  cover: "ARTICLE COVER (IMAGE LINK)",
-  readTime: {
-    value: 2,
-    unit: "minute",
+  title: {
+    in: ["body"],
+    isString: {
+      errorMessage: "title validation failed , type must be string  ",
+    },
+  },
+  category: {
+    in: ["body"],
+    isString: {
+      errorMessage: "category validation failed , type must be  string ",
+    },
+  },
+  cover: {
+    in: ["body"],
+    isString: {
+      errorMessage: "cover validation failed , type must be string ",
+    },
   },
   author: {
-    name: "AUTHOR AVATAR NAME",
-    avatar: "AUTHOR AVATAR LINK",
+    in: ["body"],
+    isString: {
+      errorMessage: "author's name validation failed , type must be string",
+    },
   },
-  content: "HTML",
-  createdAt: "NEW DATE",
+  content: {
+    in: ["body"],
+    isString: {
+      errorMessage: "content validation failed , type must be string",
+    },
+    avatar: {
+      in: ["body"],
+      isString: {
+        errorMessage: "avatar validation failed , type must be string",
+      },
+    },
+    createdAt: {
+      in: ["body"],
+      isDate: {
+        errorMessage: "avatar validation failed , type must be string",
+      },
+    },
+
+    "readTime.value": {
+      in: ["body"],
+      isNumeric: {
+        errorMessage: "readTime.value  validation failed , type must be numeric ",
+      },
+    },
+    "readTime.unit": {
+      in: ["body"],
+      isString: {
+        errorMessage: "readTime.unit  validation failed , type must be string ",
+      },
+    },
+  },
 }
 
 export const checkBookSchema = checkSchema(blogsSchema)
