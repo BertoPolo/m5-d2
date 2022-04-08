@@ -26,7 +26,7 @@ authorsRouter.post("/", async (req, res, next) => {
 
 authorsRouter.post("/:authorId/uploadAvatar", multer().single("avatar"), async (req, res, next) => {
   try {
-    await saveUsersAvatars("avatar.gif", req.file.buffer)
+    await saveUsersAvatars(`${req.params.authorId}.gif`, req.file.buffer)
     console.log("FILES: ", req.file)
     res.send()
   } catch (error) {

@@ -2,7 +2,7 @@ import express from "express"
 import uniqid from "uniqid"
 import createError from "http-errors"
 import { checkBookSchema, checkValidationResult } from "./validation.js"
-import { readBlogs, writeBlogs } from "../../library/fs-tools.js"
+import { readBlogs, writeBlogs, saveBlogsCovers } from "../../library/fs-tools.js"
 import multer from "multer"
 
 const blogsRouter = express.Router()
@@ -24,11 +24,12 @@ blogsRouter.post("/", checkBookSchema, checkValidationResult, async (req, res, n
 ////////////
 blogsRouter.post("/:blogId/uploadCover", multer().single("cover"), async (req, res, next) => {
   try {
-    await saveBlogsCovers("cover.jpg", req.file.buffer)
+    await saveBlogsCovers(`${req.params.blogId}.jpg`, req.file.buffer)
     console.log("FILES: ", req.file)
     res.send()
   } catch (error) {
     next(error)
+    console.log(error)
   }
 })
 
