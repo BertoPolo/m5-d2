@@ -23,9 +23,10 @@ authorsRouter.post("/", async (req, res, next) => {
   }
 })
 ////////////
-
+//this "avatar" have to be the same at FE,this is the prop
 authorsRouter.post("/:authorId/uploadAvatar", multer().single("avatar"), async (req, res, next) => {
   try {
+    //this give the name and extension to the file
     await saveUsersAvatars(`${req.params.authorId}.gif`, req.file.buffer)
     console.log("FILES: ", req.file)
     res.send()
