@@ -1,7 +1,7 @@
 import express from "express"
 import uniqid from "uniqid"
 import { readAuthors, writeAuthors } from "../../library/fs-tools.js"
-import { saveUsersAvatars } from "../../library/fs-tools.js"
+import { saveAuthorsAvatars } from "../../library/fs-tools.js"
 import multer from "multer"
 
 const authorsRouter = express.Router()
@@ -27,9 +27,9 @@ authorsRouter.post("/", async (req, res, next) => {
 authorsRouter.post("/:authorId/uploadAvatar", multer().single("avatar"), async (req, res, next) => {
   try {
     //this give the name and extension to the file
-    await saveUsersAvatars(`${req.params.authorId}.gif`, req.file.buffer)
+    await saveAuthorsAvatars(`${req.params.authorId}.gif`, req.file.buffer)
     console.log("FILES: ", req.file)
-    res.send()
+    res.status(201).send()
   } catch (error) {
     next(error)
   }

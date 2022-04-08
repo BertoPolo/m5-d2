@@ -2,7 +2,7 @@ import express from "express"
 import uniqid from "uniqid"
 import createError from "http-errors"
 import { checkBookSchema, checkValidationResult } from "./validation.js"
-import { readBlogs, writeBlogs, saveBlogsCovers } from "../../library/fs-tools.js"
+import { readBlogs, writeBlogs, saveBlogsCovers, blogsPublicFolderCoverPath } from "../../library/fs-tools.js"
 import multer from "multer"
 
 const blogsRouter = express.Router()
@@ -26,6 +26,14 @@ blogsRouter.post("/:blogId/uploadCover", multer().single("cover"), async (req, r
   try {
     await saveBlogsCovers(`${req.params.blogId}.jpg`, req.file.buffer)
     console.log("FILES: ", req.file)
+
+    const blogs = await readBlogs()
+
+    const theBlog = blogs.find((blog) => blog.id === req.params.blogId)
+
+    theBlog = { ...req.body, cover: join(blogsPublicFolderCoverPath, blogId) }
+    writeBlogs(theBlog)
+    //grab the blog and update / create a prop " cover" with its path
     res.send()
   } catch (error) {
     next(error)
@@ -64,6 +72,18 @@ blogsRouter.get("/blogId", async (req, res, next) => {
     next(error)
   }
 })
+
+///////
+blogsRouter.get("/:blogId/uploadCover/blogId", multer().single("cover"), async (req, res, next) => {
+  try {
+    console.log("FILES: ", req.file)
+    res.send()
+  } catch (error) {
+    next(error)
+    console.log(error)
+  }
+})
+
 ///////
 blogsRouter.put("/blogId", async (req, res, next) => {
   try {

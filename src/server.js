@@ -4,13 +4,13 @@ import { join } from "path"
 import listEndpoints from "express-list-endpoints"
 import authorsRouter from "./services/authors/index.js"
 import blogsRouter from "./services/blogs/index.js"
-// import filesRouter from "./services/files/index.js"
 import { genericErrorHandler, notFoundErrorHandler, badRequestErrorHandler, unauthorizedErrorHandler } from "./errorHandlers.js"
 
 const server = express()
 
 const port = 3001
-const publicFolderPath = join(process.cwd(), "../public")
+
+const publicFolderPath = join(process.cwd(), "./public")
 
 const loggerMiddleware = (req, res, next) => {
   console.log(`Request method: ${req.method} --- URL ${req.url} --- ${new Date()}`)
