@@ -11,7 +11,41 @@
     "author": {
       "name": "AUTHOR AVATAR NAME",
       "avatar": "AUTHOR AVATAR LINK",
-      "comment": []
+      "comment": ["sdfsf", "sdfsdfsfdss"]
+    },
+    "content": "HTML",
+    "createdAt": "NEW DATE"
+  },
+  {
+    "_id": "dkfk36y54y4udfkdfk",
+    "category": "ARTICLE CATEGORY",
+    "title": "ARTICLE TITLE",
+    "cover": "ARTICLE COVER (IMAGE LINK)",
+    "readTime": {
+      "value": 2,
+      "unit": "minute"
+    },
+    "author": {
+      "name": "AUTHOR AVATAR NAME",
+      "avatar": "AUTHOR AVATAR LINK",
+      "comment": ["fsgrgeree", "asjdfosjdfpwefjw"]
+    },
+    "content": "HTML",
+    "createdAt": "NEW DATE"
+  },
+  {
+    "_id": "dkfkdfkdfk",
+    "category": "ARTICLE CATEGORY",
+    "title": "ARTICLE TITLE",
+    "cover": "ARTICLE COVER (IMAGE LINK)",
+    "readTime": {
+      "value": 2,
+      "unit": "minute"
+    },
+    "author": {
+      "name": "AUTHOR AVATAR NAME",
+      "avatar": "AUTHOR AVATAR LINK",
+      "comment": ["fwpof9032pwjf", "okdsfosdfoksnf"]
     },
     "content": "HTML",
     "createdAt": "NEW DATE"
