@@ -73,21 +73,22 @@ blogsRouter.get("/blogId", async (req, res, next) => {
   }
 })
 //////////
-blogsRouter.get("/blogId/comments", async (req, res, next) => {
+blogsRouter.get("/:blogId/comments", async (req, res, next) => {
   try {
     const blogs = await readBlogs()
 
-    const blog = blogs.find((person) => person.id === req.params.blogId)
+    const blog = blogs.find((person) => person._id === req.params.blogId)
 
     // if (blog) {
     res.status(200).send(blog.author.comment)
     // } else {
-    // next(createError(404, `this post ${req.params.blogId} is not found`))
+    // next(createError(404, `this post ${req.params.blogId} is not found
     // }
   } catch (error) {
     next(error)
   }
 })
+// POST /blogPosts/:id/comments, add a new comment to the specific post
 
 ///////
 blogsRouter.get("/:blogId/uploadCover/blogId", multer().single("cover"), async (req, res, next) => {
