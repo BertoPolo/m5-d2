@@ -25,7 +25,6 @@ server.use(express.json())
 
 server.use("/authors", authorsRouter)
 server.use("/blogs", blogsRouter)
-// server.use("/files", filesRouter)
 
 //ERROR MIDDLEWARES
 server.use(badRequestErrorHandler) // 400

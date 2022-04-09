@@ -79,11 +79,11 @@ blogsRouter.get("/blogId/comments", async (req, res, next) => {
 
     const blog = blogs.find((person) => person.id === req.params.blogId)
 
-    if (blog) {
-      res.status(200).send(blog, blog.comment)
-    } else {
-      next(createError(404, `this post ${req.params.blogId} is not found`))
-    }
+    // if (blog) {
+    res.status(200).send(blog, blog.comment)
+    // } else {
+    // next(createError(404, `this post ${req.params.blogId} is not found`))
+    // }
   } catch (error) {
     next(error)
   }
