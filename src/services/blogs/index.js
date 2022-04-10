@@ -95,7 +95,12 @@ blogsRouter.post("/:blogId/comments", async (req, res, next) => {
 
     const blog = blogs.find((person) => person._id === req.params.blogId)
 
-    if (blog) {
+    if (isBlogExist) {
+      const comment = blog.author.comment
+
+      blogs.push(join(...comment), req.body)
+
+      writeBlogs(blogs)
       res.status(201).send(req.body)
     } else {
       next(createError(404, `this post ${req.params.blogId} is not found`))
