@@ -87,8 +87,7 @@ blogsRouter.get("/:blogId/comments", async (req, res, next) => {
     next(error)
   }
 })
-///////TO CHECK EVERYTHING. compare with other posts
-////////// POST /blogPosts/:id/comments, add a new comment to the specific post
+///////
 blogsRouter.post("/:blogId/comments", async (req, res, next) => {
   try {
     const blogs = await readBlogs()
