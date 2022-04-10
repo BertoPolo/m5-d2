@@ -39,7 +39,7 @@ const blogsSchema = {
     },
     createdAt: {
       in: ["body"],
-      isDate: {
+      isString: {
         errorMessage: "avatar validation failed , type must be string",
       },
     },

@@ -33,7 +33,6 @@ blogsRouter.post("/:blogId/uploadCover", multer().single("cover"), async (req, r
 
     theBlog = { ...req.body, cover: join(blogsPublicFolderCoverPath, blogId) }
     writeBlogs(theBlog)
-    //grab the blog and update / create a prop " cover" with its path
     res.send()
   } catch (error) {
     next(error)
@@ -79,16 +78,32 @@ blogsRouter.get("/:blogId/comments", async (req, res, next) => {
 
     const blog = blogs.find((person) => person._id === req.params.blogId)
 
-    // if (blog) {
-    res.status(200).send(blog.author.comment)
-    // } else {
-    // next(createError(404, `this post ${req.params.blogId} is not found
-    // }
+    if (blog) {
+      res.status(200).send(blog.author.comment)
+    } else {
+      next(createError(404, `this post ${req.params.blogId} is not found`))
+    }
   } catch (error) {
     next(error)
   }
 })
-// POST /blogPosts/:id/comments, add a new comment to the specific post
+///////TO CHECK EVERYTHING. compare with other posts
+////////// POST /blogPosts/:id/comments, add a new comment to the specific post
+blogsRouter.post("/:blogId/comments", async (req, res, next) => {
+  try {
+    const blogs = await readBlogs()
+
+    const blog = blogs.find((person) => person._id === req.params.blogId)
+
+    if (blog) {
+      res.status(201).send(req.body)
+    } else {
+      next(createError(404, `this post ${req.params.blogId} is not found`))
+    }
+  } catch (error) {
+    next(error)
+  }
+})
 
 ///////
 blogsRouter.get("/:blogId/uploadCover/blogId", multer().single("cover"), async (req, res, next) => {
