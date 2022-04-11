@@ -8,7 +8,9 @@ import { genericErrorHandler, notFoundErrorHandler, badRequestErrorHandler, unau
 
 const server = express()
 
-const port = 3001
+const urlList = [process.env.FE_DEV_URL, process.env.FE_PROD_URL]
+
+const port = process.env.PORT || 3001
 
 const publicFolderPath = join(process.cwd(), "./public")
 
@@ -16,6 +18,7 @@ const loggerMiddleware = (req, res, next) => {
   console.log(`Request method: ${req.method} --- URL ${req.url} --- ${new Date()}`)
   next()
 }
+
 server.use(express.static(publicFolderPath))
 // server.use(cors())
 server.use(loggerMiddleware) // login */

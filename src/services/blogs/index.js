@@ -87,6 +87,23 @@ blogsRouter.get("/:blogId/comments", async (req, res, next) => {
     next(error)
   }
 })
+
+/////GET /authors/:id/blogPosts/ => get all the posts for an author with a given ID
+
+/* authorsRouter.get("/", async (req, res, next) => {
+  try {
+    const authorId = req.params.authorId
+    console.log("REQ.PARAMS.authorId: ", req.params.authorId)
+    const authorsArray = await readAuthors()
+
+    const foundAuthor = authorsArray.find((author) => author.id === authorId)
+    res.send(foundAuthor)
+  } catch (error) {
+    next(error)
+  }
+}) */
+
+///////////
 ///////
 /* blogsRouter.post("/:blogId/comments", async (req, res, next) => {
   try {

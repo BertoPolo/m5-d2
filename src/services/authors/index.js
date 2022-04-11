@@ -11,7 +11,9 @@ authorsRouter.post("/", async (req, res, next) => {
   try {
     const authorsArray = await readAuthors()
 
-    const newAuthor = { ...req.body, createdAt: new Date(), id: uniqid() }
+    const isNewEmail = authorsArray.find((author) => author.email === req.body.email)
+
+    const newAuthor = { ...req.body, createdAt: new Date(), id: uniqid(), existingMail: isNewEmail }
     console.log(newAuthor)
 
     authorsArray.push(newAuthor)
