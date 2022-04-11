@@ -88,7 +88,7 @@ blogsRouter.get("/:blogId/comments", async (req, res, next) => {
   }
 })
 ///////
-blogsRouter.post("/:blogId/comments", async (req, res, next) => {
+/* blogsRouter.post("/:blogId/comments", async (req, res, next) => {
   try {
     const blogs = await readBlogs()
 
@@ -107,7 +107,7 @@ blogsRouter.post("/:blogId/comments", async (req, res, next) => {
   } catch (error) {
     next(error)
   }
-})
+}) */
 
 ///////
 blogsRouter.get("/:blogId/uploadCover/blogId", multer().single("cover"), async (req, res, next) => {
