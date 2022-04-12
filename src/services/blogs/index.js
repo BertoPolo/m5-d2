@@ -4,6 +4,7 @@ import createError from "http-errors"
 import { checkBookSchema, checkValidationResult } from "./validation.js"
 import { readBlogs, writeBlogs, saveBlogsCovers, blogsPublicFolderCoverPath } from "../../library/fs-tools.js"
 import multer from "multer"
+import { getPdfReadableStream } from "../../library/pdf-tools"
 
 const blogsRouter = express.Router()
 ////
@@ -88,22 +89,18 @@ blogsRouter.get("/:blogId/comments", async (req, res, next) => {
   }
 })
 
-/////GET /authors/:id/blogPosts/ => get all the posts for an author with a given ID
+/////////// Create an endpoint dedicated to export all the relevant data of a blog post into a well styled downloadable PDF file.
 
-/* authorsRouter.get("/", async (req, res, next) => {
-  try {
-    const authorId = req.params.authorId
-    console.log("REQ.PARAMS.authorId: ", req.params.authorId)
-    const authorsArray = await readAuthors()
+blogsRouter.get("/:blogId/downloadPDF", async (req, res, next) => {
+  const blogs = await readBlogs()
 
-    const foundAuthor = authorsArray.find((author) => author.id === authorId)
-    res.send(foundAuthor)
-  } catch (error) {
-    next(error)
-  }
-}) */
+  const blog = blogs.find((person) => person._id === req.params.blogId)
 
-///////////
+  //pass the blog as a parameter to de pdf maker and then send it
+
+  // res.status(200).send(blog)
+})
+
 ///////
 /* blogsRouter.post("/:blogId/comments", async (req, res, next) => {
   try {
