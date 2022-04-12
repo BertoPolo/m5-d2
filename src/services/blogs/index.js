@@ -92,15 +92,38 @@ blogsRouter.get("/:blogId/comments", async (req, res, next) => {
 /////////// Create an endpoint dedicated to export all the relevant data of a blog post into a well styled downloadable PDF file.
 
 blogsRouter.get("/:blogId/downloadPDF", async (req, res, next) => {
-  const blogs = await readBlogs()
+  try {
+    const blogs = await readBlogs()
 
-  const blog = blogs.find((person) => person._id === req.params.blogId)
+    const blog = blogs.find((person) => person._id === req.params.blogId)
 
-  //pass the blog as a parameter to de pdf maker and then send it
+    if (blog) {
+      //pass the blog as a parameter to de pdf maker and then send it
+      //pipeline stuff is remaining
+      getPdfReadableStream(blog)
 
-  // res.status(200).send(blog)
+      res.status(200).send(blog)
+    } else {
+      next(createError(404, `this post ${req.params.blogId} is not found`))
+    }
+  } catch (error) {
+    next(error)
+  }
 })
+/////////////riccardo's
+// filesRouter.get("/downloadPDF", async (req, res, next) => {
+//   try {
+//     const books = await getBooks()
+//     res.setHeader("Content-Disposition", "attachment; filename=whatever.pdf")
+//     const source = getPdfReadableStream(books[0])
+//     const destination = res
 
+//     pipeline(source, destination, err => {
+//       if (err) console.log(err)
+//     })
+//   } catch (error) {
+//     next(error)
+//   }
 ///////
 /* blogsRouter.post("/:blogId/comments", async (req, res, next) => {
   try {
