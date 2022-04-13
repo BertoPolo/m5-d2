@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/BertoPolo/m5-d2#readme",
   "dependencies": {
+    "@sendgrid/mail": "^7.6.2",
     "cloudinary": "^1.29.0",
     "cors": "^2.8.5",
     "express": "^4.17.3",
