@@ -1,8 +1,13 @@
 import express from "express"
 import uniqid from "uniqid"
 import { readAuthors, writeAuthors } from "../../library/fs-tools.js"
-import { saveAuthorsAvatars } from "../../library/fs-tools.js"
+import { saveAuthorsAvatars, getAuthorsReadableStream } from "../../library/fs-tools.js"
 import multer from "multer"
+import json2csv from "json2csv"
+import { v2 as cloudinary } from "cloudinary"
+// import { CloudinaryStorage } from "multer-storage-cloudinary"
+import { pipeline } from "stream"
+import { createGzip } from "zlib"
 
 const authorsRouter = express.Router()
 
@@ -47,6 +52,23 @@ authorsRouter.get("/", async (req, res, next) => {
     next(error)
   }
 })
+
+//////////Create an endpoint dedicated to export the list of all the authors as a CSV file m5d8
+authorsRouter.get("/downloadCSV", async (req, res, next) => {
+  try {
+    res.setHeader("Content-Disposition", "attachment; filename=authors.csv")
+    const source = getAuthorsReadableStream()
+    const transform = new json2csv.Transform({ fields: ["name", "surename", "email", "id"] })
+    const destination = res
+
+    pipeline(source, transform, destination, (err) => {
+      if (err) console.log(err)
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 ////////////
 
 authorsRouter.get("/:authorId", async (req, res, next) => {

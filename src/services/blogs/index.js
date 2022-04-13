@@ -4,7 +4,7 @@ import createError from "http-errors"
 import { checkBookSchema, checkValidationResult } from "./validation.js"
 import { readBlogs, writeBlogs, saveBlogsCovers, blogsPublicFolderCoverPath } from "../../library/fs-tools.js"
 import multer from "multer"
-import { getPdfReadableStream } from "../../library/pdf-tools"
+import { getPdfReadableStream } from "../../library/pdf-tools.js"
 
 const blogsRouter = express.Router()
 ////
@@ -12,6 +12,7 @@ blogsRouter.post("/", checkBookSchema, checkValidationResult, async (req, res, n
   try {
     const newBlog = { ...req.body, createdAt: new Date(), id: uniqid() }
     const blogs = await readBlogs()
+    ////////// Send an Email to the author when a new blog post is being created m5d8//////
 
     blogs.push(newBlog)
 
@@ -22,6 +23,7 @@ blogsRouter.post("/", checkBookSchema, checkValidationResult, async (req, res, n
     next(error)
   }
 })
+
 ////////////
 blogsRouter.post("/:blogId/uploadCover", multer().single("cover"), async (req, res, next) => {
   try {
@@ -98,7 +100,6 @@ blogsRouter.get("/:blogId/downloadPDF", async (req, res, next) => {
     const blog = blogs.find((person) => person._id === req.params.blogId)
 
     if (blog) {
-      //pass the blog as a parameter to de pdf maker and then send it
       //pipeline stuff is remaining
       getPdfReadableStream(blog)
 
